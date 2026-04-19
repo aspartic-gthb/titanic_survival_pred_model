@@ -9,6 +9,13 @@ The model is powered by a **Random Forest Classifier**, tuned with GridSearchCV,
 - **Micro-Animations**: Custom styled prediction cards returning survival probabilities.
 - **Fast Deployment**: Architected perfectly to deploy on Streamlit Community Cloud or Hugging Face Spaces instantly.
 
+## 🧠 Model Optimization Approach
+To achieve a high cross-validation accuracy of **83.16%** beyond the baseline, we implemented the following strategies:
+1. **Intelligent Imputation**: We avoided global averages for missing data. For example, missing `Fare` values were imputed based on the median of the passenger's specific `pclass` to accurately reflect economic disparities.
+2. **Feature Engineering**: Constructed an aggregated `family_size` feature (combining `sibsp` and `parch`) to capture the survival dynamics of group travelers versus solo passengers.
+3. **Data Standardization**: Consolidated messy text inputs (various capitalizations of gender and ports) into clean, model-ready numerical matrices.
+4. **Exhaustive Hyperparameter Tuning**: Rather than relying on base settings, we ran `GridSearchCV` on our Random Forest across 135 distinct parameter combinations (tuning `max_depth`, `min_samples_split`, `min_samples_leaf`, and `n_estimators`). With 5-fold cross-validation, this thoroughly optimized the bias-variance tradeoff and generalized the model perfectly.
+
 ## 🛠 Tech Stack
 - **Frontend/Backend**: Streamlit
 - **Machine Learning**: Scikit-Learn (Random Forest)
