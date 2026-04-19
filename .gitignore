@@ -1,0 +1,11 @@
+# Datasets (We ignore these so we only push the required deployment files)
+*.csv
+
+# Python Artefacts
+__pycache__/
+*.pyc
+
+# Local Environments
+.env
+venv/
+env/
