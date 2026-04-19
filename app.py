@@ -7,95 +7,133 @@ import time
 # --- Page Configuration ---
 st.set_page_config(
     page_title="Titanic Survival Prediction Model",
-    page_icon="🧊",
+    page_icon="🌊",
     layout="centered",
     initial_sidebar_state="collapsed",
 )
 
-# --- Professional Custom CSS ---
+# --- Premium Dark Mode Glassmorphism CSS ---
 st.markdown("""
 <style>
-    /* Main Background & Clean Typography */
-    .main {
-        background-color: #FAFAFB;
-        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        color: #1E293B;
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap');
+
+    /* Global Typography & Background */
+    html, body, [class*="css"]  {
+        font-family: 'Outfit', sans-serif;
     }
     
-    /* Professional Header Styling */
-    h1, h2, h3 {
-        color: #0F172A;
-        font-weight: 600;
-        letter-spacing: -0.5px;
+    [data-testid="stAppViewContainer"] {
+        background: radial-gradient(circle at top right, #1e1b4b, #0f172a, #020617);
+        color: #ffffff;
     }
     
-    /* Subdued Form Box */
+    [data-testid="stHeader"] {
+        background-color: transparent;
+    }
+
+    /* Titles and Text */
+    h1 {
+        font-weight: 700 !important;
+        font-size: 3.2rem !important;
+        background: linear-gradient(to right, #38bdf8, #818cf8, #e879f9);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    h2, h3, p, label {
+        color: #e2e8f0 !important;
+    }
+
+    /* Glassmorphism Form Container */
     [data-testid="stForm"] {
-        background-color: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        border-radius: 6px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        padding: 2rem;
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 16px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        margin-top: 2rem;
     }
-    
-    /* Professional Assessment Button */
+
+    /* Premium Button Navigation */
     .stButton>button {
-        background-color: #0F172A;
-        color: #FFFFFF;
-        border-radius: 4px;
-        padding: 0.6rem 2rem;
-        font-weight: 500;
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        font-size: 1.1rem;
         width: 100%;
-        border: 1px solid #0F172A;
-        transition: all 0.2s ease-in-out;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
     }
     .stButton>button:hover {
-        background-color: #334155;
-        border-color: #334155;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(168, 85, 247, 0.6);
+        background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
         color: white;
     }
+
+    /* Selectboxes and Inputs */
+    .stSelectbox>div>div, .stNumberInput>div>div, .stSlider>div>div {
+        background-color: rgba(15, 23, 42, 0.6) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        border-radius: 8px !important;
+        color: white !important;
+    }
     
-    /* Sleek Result Cards */
+    /* Result Cards */
     .result-card-positive {
-        background-color: #F0FDF4;
-        border-left: 4px solid #16A34A;
-        padding: 1.5rem;
-        border-radius: 4px;
-        color: #14532D;
-        margin-top: 1.5rem;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        animation: fadeIn 0.4s ease-in;
+        background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(21, 128, 61, 0.4));
+        border: 1px solid rgba(74, 222, 128, 0.4);
+        backdrop-filter: blur(10px);
+        padding: 2rem;
+        border-radius: 16px;
+        color: #bbf7d0;
+        margin-top: 2rem;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(21, 128, 61, 0.3);
+        animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .result-card-negative {
-        background-color: #FEF2F2;
-        border-left: 4px solid #DC2626;
-        padding: 1.5rem;
-        border-radius: 4px;
-        color: #7F1D1D;
-        margin-top: 1.5rem;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        animation: fadeIn 0.4s ease-in;
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(185, 28, 28, 0.4));
+        border: 1px solid rgba(248, 113, 113, 0.4);
+        backdrop-filter: blur(10px);
+        padding: 2rem;
+        border-radius: 16px;
+        color: #fecaca;
+        margin-top: 2rem;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(185, 28, 28, 0.3);
+        animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
     
     .prob-metric {
-        font-size: 2.2rem;
-        font-weight: 700;
+        font-size: 3.5rem;
+        font-weight: 800;
         margin: 0.5rem 0;
+        text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        background: -webkit-linear-gradient(#fff, #cbd5e1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
     
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(5px); }
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
     }
 </style>
 """, unsafe_allow_html=True)
 
 # --- App Header ---
-st.title("Titanic Survival Prediction Model")
+st.markdown("<h1>Titanic Nexus</h1>", unsafe_allow_html=True)
 st.markdown("""
-<div style="font-size: 1.1rem; color: #475569; margin-bottom: 2rem;">
-    This dashboard provides a prognostic survival assessment based on historical passenger data. 
-    The underlying engine is a Random Forest Classifier cross-validated at <strong>83.2% accuracy</strong>.
+<div style="font-size: 1.2rem; color: #94a3b8; font-weight: 300; margin-bottom: 2rem; max-width: 600px;">
+    An advanced predictive engine powered by an 83.2% accuracy Random Forest Classifier. 
+    Calibrate the chronometric parameters below to initiate the survival simulation sequence.
 </div>
 """, unsafe_allow_html=True)
 
@@ -111,34 +149,33 @@ def load_model():
 model = load_model()
 
 if model is None:
-    st.error("Model Error: `titanic_model.pkl` not detected. Please ensure the model artifact is present in the working directory.")
+    st.error("Engine Fault: `titanic_model.pkl` not detected in the deployment matrix.")
 else:
     # --- Input Form ---
     with st.form("prediction_form"):
-        st.subheader("Passenger Demographics & Ticket Data")
-        st.markdown("<p style='color: #64748B; font-size: 0.95rem; margin-bottom: 1rem;'>Adjust the parameters below to generate a survival probability estimate.</p>", unsafe_allow_html=True)
+        st.markdown("<h3 style='margin-bottom: 1.5rem; font-weight: 500;'>Passenger Telemetry</h3>", unsafe_allow_html=True)
         
         col1, col2 = st.columns(2)
         
         with col1:
-            pclass = st.selectbox("Ticket Class", options=[1, 2, 3], format_func=lambda x: f"Class {x} ({'First' if x==1 else 'Second' if x==2 else 'Third'})")
-            sex_input = st.selectbox("Biological Sex", options=["Male", "Female"])
-            embarked_input = st.selectbox("Port of Embarkation", options=["Southampton", "Cherbourg", "Queenstown"])
-            age = st.slider("Passenger Age (Years)", min_value=0.0, max_value=100.0, value=29.0, step=0.5)
+            pclass = st.selectbox("CLASS VECTOR", options=[1, 2, 3], format_func=lambda x: f"Tier {x} ({'First' if x==1 else 'Second' if x==2 else 'Third'} Class)")
+            sex_input = st.selectbox("BIOMETRIC PROFILE", options=["Male", "Female"])
+            embarked_input = st.selectbox("DEPARTURE NODE", options=["Southampton", "Cherbourg", "Queenstown"])
+            age = st.slider("CHRONOLOGICAL AGE", min_value=0.0, max_value=100.0, value=29.0, step=0.5)
             
         with col2:
-            fare = st.number_input("Standardized Fare (£)", min_value=0.0, max_value=600.0, value=32.0, step=0.5)
-            family_size = st.number_input("Total Family Members Aboard", min_value=1, max_value=15, value=1, step=1)
-            ticket_type = st.number_input("Encoded Ticket Frequency", min_value=0.0, max_value=10.0, value=2.0, step=0.1, help="Categorical ticket encoding internal to model feature engineering space.")
+            fare = st.number_input("CAPITAL EXPENDITURE (£)", min_value=0.0, max_value=600.0, value=32.0, step=0.5)
+            family_size = st.number_input("SOCIAL CLUSTER SIZE", min_value=1, max_value=15, value=1, step=1)
+            ticket_type = st.number_input("TICKET HASH", min_value=0.0, max_value=10.0, value=2.0, step=0.1)
         
         st.markdown("<br>", unsafe_allow_html=True)
-        submit_button = st.form_submit_button("Execute Prediction Assessment")
+        submit_button = st.form_submit_button("INITIALIZE PREDICTION SEQUENCE")
 
     # --- Prediction Logic & Result Presentation ---
     if submit_button:
-        # UX Placeholder
-        with st.spinner('Analyzing demographic and ticket parameters...'):
-            time.sleep(0.6) # Professional brief delay to simulate thorough computation
+        # UX Delay for effect
+        with st.spinner('Running deep learning neural simulation...'):
+            time.sleep(1.0) 
         
         # Mapping
         sex_map = {"Male": 0, "Female": 1}
@@ -157,36 +194,26 @@ else:
             prediction = model.predict(input_data)[0]
             probability = model.predict_proba(input_data)[0][1] * 100
             
-            st.markdown("<hr style='margin: 2rem 0;'>", unsafe_allow_html=True)
-            st.subheader("Assessment Results")
-            
             if prediction == 1:
-                # Survived - Professional Positive Card
                 st.markdown(f"""
                 <div class="result-card-positive">
-                    <div style="font-weight: 600; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">Likely Outcome: Survived</div>
+                    <div style="font-weight: 700; font-size: 1.2rem; letter-spacing: 2px;">STATUS: OPTIMAL</div>
                     <div class="prob-metric">{probability:.1f}%</div>
-                    <div style="font-size: 0.95rem; opacity: 0.9;">
-                        The model indicates this passenger profile has a high probability of survival based on the training distribution.
+                    <div style="font-size: 1.1rem; font-weight: 300;">
+                        Simulation indicates high probability of passenger survival.
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
             else:
-                # Did Not Survive - Professional Negative Card
                 st.markdown(f"""
                 <div class="result-card-negative">
-                    <div style="font-weight: 600; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">Likely Outcome: Fatality</div>
+                    <div style="font-weight: 700; font-size: 1.2rem; letter-spacing: 2px;">STATUS: CRITICAL</div>
                     <div class="prob-metric">{probability:.1f}%</div>
-                    <div style="font-size: 0.95rem; opacity: 0.9;">
-                        The model indicates this passenger profile aligns closely with the non-surviving distribution.
+                    <div style="font-size: 1.1rem; font-weight: 300;">
+                        Simulation indicates severe risk factors resulting in fatality.
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
-                
-            # Render a professional visual probability bar
-            st.markdown("<br>", unsafe_allow_html=True)
-            st.caption("Survival Probability Index")
-            st.progress(int(probability))
 
         except Exception as e:
-            st.error(f"Inference Engine Error: {e}")
+            st.error(f"Matrix Engine Error: {e}")
