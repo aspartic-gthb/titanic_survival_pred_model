@@ -46,14 +46,6 @@ To run this application on your own machine:
    ```
    *The app will automatically open in your default web browser.*
 
-## 🌍 Hackathon Deployment Instructions
-
-Deploying this app for the world to see is completely free and takes 2 minutes:
-
-1. Push this repository to your GitHub account.
-2. Sign into [Streamlit Community Cloud](https://share.streamlit.io/) with your GitHub account.
-3. Click **New app**, select your repository, and set the main file path to `app.py`.
-4. Click **Deploy!**
 
 ---
 *Built for Hackathon Submission.*
