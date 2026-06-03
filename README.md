@@ -389,6 +389,10 @@ streamlit run app.py
 
 ## 👤 Author
 
+
+**Anirudh Sahu**
+Github: [@AnirudhSahu](https://github.com/aspartic-gthb)
+
 **Tanvi Biswas**
 GitHub: [@Tanvibiswas](https://github.com/Tanvibiswas)
 
