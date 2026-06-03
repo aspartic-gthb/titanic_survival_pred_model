@@ -396,5 +396,6 @@ Github: [@AnirudhSahu](https://github.com/aspartic-gthb)
 **Tanvi Biswas**
 GitHub: [@Tanvibiswas](https://github.com/Tanvibiswas)
 
+**@Team Outliers**(Runners-Up- Re-Model(CSS Event))
 ---
 
